@@ -1,4 +1,4 @@
-# plaits.gdextension
+# <img src="plaits-logo.png"> plaits.gdextension
 
 An embedding of the venerable [Plaits](https://web.archive.org/web/20211128142523/https://mutable-instruments.net/modules/plaits/) for [Godot](https://godotengine.org/) with the GDExtension system.
 
