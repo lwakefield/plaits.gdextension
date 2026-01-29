@@ -5,7 +5,7 @@ import sys
 from methods import print_error
 
 
-libname = "EXTENSION-NAME"
+libname = "plaits"
 projectdir = "project"
 
 localEnv = Environment(tools=["default"], PLATFORM="")
@@ -37,8 +37,18 @@ Run the following command to download godot-cpp:
 
 env = SConscript("godot-cpp/SConstruct", {"env": env, "customs": customs})
 
-env.Append(CPPPATH=["src/"])
+env.Append(CPPPATH=[
+    "src/",
+    "eurorack/"
+])
 sources = Glob("src/*.cpp")
+sources.append(Glob("src/*.cc"))
+sources.append(Glob("eurorack/stmlib/utils/*.cc"))
+sources.append(Glob("eurorack/stmlib/dsp/*.cc"))
+sources.append(Glob("eurorack/plaits/resources.cc"))
+sources.append(Glob("eurorack/plaits/dsp/*.cc"))
+sources.append(Glob("eurorack/plaits/dsp/*/*.cc"))
+env.Append(CPPDEFINES=["TEST"])
 
 if env["target"] in ["editor", "template_debug"]:
     try:

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://c4to7cjwrfvth"]
+
+[ext_resource type="Script" uid="uid://c3pljs6iop3x" path="res://mote.gd" id="1_6gpfe"]
+
+[sub_resource type="Gradient" id="Gradient_8lvy3"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wcwec"]
+gradient = SubResource("Gradient_8lvy3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="PlaitsStream" id="PlaitsStream_6gpfe"]
+decay = 1.0
+play_mode = 1
+resource_local_to_scene = true
+
+[node name="Mote" type="Sprite2D" unique_id=1894755197]
+texture = SubResource("GradientTexture2D_wcwec")
+script = ExtResource("1_6gpfe")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=669284993]
+stream = SubResource("PlaitsStream_6gpfe")

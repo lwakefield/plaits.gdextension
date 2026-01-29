@@ -1,6 +1,27 @@
-[gd_scene load_steps=2 format=3 uid="uid://dh0oj81pufivs"]
+[gd_scene format=3 uid="uid://dh0oj81pufivs"]
 
-[ext_resource type="Script" path="res://example.gd" id="1_jdh55"]
+[ext_resource type="Script" uid="uid://bkwk40ybs8kgm" path="res://example.gd" id="1_jdh55"]
+[ext_resource type="Script" uid="uid://dcpw077gefpyc" path="res://fps.gd" id="2_n51mc"]
 
-[node name="Node" type="Node"]
+[node name="Node2D" type="Node2D" unique_id=386187529]
 script = ExtResource("1_jdh55")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1025158578]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=684486144]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="FPS" type="Label" parent="CanvasLayer" unique_id=1898946639]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+script = ExtResource("2_n51mc")

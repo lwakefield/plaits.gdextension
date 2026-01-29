@@ -1,0 +1,9 @@
+[configuration]
+
+entry_symbol = "plaits_init"
+compatibility_minimum = "4.1"
+reloadable = true
+
+[libraries]
+
+macos.debug = "extensions/plaits/bin/macos/libplaits.macos.template_debug.dylib"
