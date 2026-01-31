@@ -29,8 +29,8 @@ class PlaitsStream : public AudioStream {
 		virtual double _get_length() const override;
 		int test();
 		int render(AudioFrame *p_buffer, float p_rate_scale, int p_frames);
-		void set_engine(float x);
-		float get_engine();
+		void set_engine(int x);
+		int get_engine();
 
 		void set_decay(float x);
 		float get_decay();

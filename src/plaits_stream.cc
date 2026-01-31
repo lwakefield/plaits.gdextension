@@ -9,13 +9,9 @@ PlaitsStream::PlaitsStream() {
 	patch.timbre = 0.5f;
 	patch.morph = 0.5f;
 
-	patch.frequency_modulation_amount = 0.f;;
-	patch.timbre_modulation_amount = 0.f;;
-	patch.morph_modulation_amount = 0.f;;
-
 	patch.lpg_colour = 0.5f;
-	patch.timbre_modulation_amount = 0.5f;
-	patch.morph_modulation_amount = 0.5f;
+	patch.timbre_modulation_amount = 0.f;
+	patch.morph_modulation_amount = 0.f;
 
 	mods.engine = 0.f;
 	mods.note = 0.f;
@@ -89,8 +85,8 @@ double PlaitsStream::_get_length() const {
 	return 0.f;
 }
 
-void PlaitsStream::set_engine(float x) { patch.engine = x; }
-float PlaitsStream::get_engine() { return patch.engine; }
+void PlaitsStream::set_engine(int x) { patch.engine = x; }
+int PlaitsStream::get_engine() { return patch.engine; }
 
 void PlaitsStream::set_decay(float x) { patch.decay = x; }
 float PlaitsStream::get_decay() { return patch.decay; }
@@ -125,7 +121,10 @@ int PlaitsStream::render(AudioFrame *p_buffer, float p_rate_scale, int p_frames)
 	float target_rate = AudioServer::get_singleton()->get_mix_rate();
 
 	// Plaits assumes a 48kHz sample rate, but ours is probably different.
-	float ratio = 48000.f / target_rate;
+	// float ratio = 48000.f / target_rate;
+	// for some reason, we are getting the correct freq output now, despite
+	// the fact that we are operating at a different sample speed? I am
+	// probably missing something...
 
 	mods.trigger_patched = play_mode == 1;
 	mods.level_patched = play_mode == 0;
@@ -136,21 +135,17 @@ int PlaitsStream::render(AudioFrame *p_buffer, float p_rate_scale, int p_frames)
 		mods.trigger = 0.0;
 	}
 
-	// we take a very naive approach of fixing the sample rate.
-	// if plaits is running faster, we only take the latest frame
-	// if plaits is running slower, we keep the last frame
-	float pos = 0.f;
-	for (int i = 0; i < p_frames; i++) {
-		plaits::Voice::Frame frame;
+	plaits::Voice::Frame frames[12];
+	for (int i = 0; i < p_frames; i += 12) {
 
-		int steps = int(floor(float(i+1) * ratio) - floor(float(i) * ratio));
-		for (int j = 0; j < steps; j++) {
-			voice.Render(patch, mods, &frame, 1);
+		int size = plaits::kBlockSize;
+		if (i+size > p_frames) size = p_frames - i;
+		voice.Render(patch, mods, frames, size);
+
+		for (int j = 0; j < size; j++) {
+			p_buffer[i+j].left = CLAMP(frames[j].out / 32767.f, -1.f, 1.f);
+			p_buffer[i+j].right = CLAMP(frames[j].out / 32767.f, -1.f, 1.f);
 		}
-		// NOTE: have had issues doing voice.Render(patch, mods, frames, p_frames);
-		//       unclear why...
-		p_buffer[i].left = CLAMP(frame.out / 32768.f, -1.f, 1.f);
-		p_buffer[i].right = CLAMP(frame.out / 32768.f, -1.f, 1.f);
 	}
 	return p_frames;
 }
