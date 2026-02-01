@@ -7,6 +7,7 @@
 
 #include "plaits_stream.h"
 #include "plaits_stream_playback.h"
+#include "plaits4.h"
 
 using namespace godot;
 
@@ -17,6 +18,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level)
 	}
 	GDREGISTER_CLASS(PlaitsStream);
 	GDREGISTER_CLASS(PlaitsStreamPlayback);
+	GDREGISTER_CLASS(Plaits4Stream);
+	GDREGISTER_CLASS(Plaits4StreamPlayback);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {

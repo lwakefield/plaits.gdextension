@@ -12,6 +12,7 @@ PlaitsStream::PlaitsStream() {
 	patch.lpg_colour = 0.5f;
 	patch.timbre_modulation_amount = 0.f;
 	patch.morph_modulation_amount = 0.f;
+	patch.frequency_modulation_amount = 0.f;
 
 	mods.engine = 0.f;
 	mods.note = 0.f;
